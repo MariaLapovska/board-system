@@ -1,0 +1,76 @@
+package com.git.board_system.controller.commands;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.git.board_system.controller.Constants;
+import com.git.board_system.controller.Links;
+import com.git.board_system.model.entities.User;
+import com.git.board_system.model.entities.User.Role;
+import com.git.board_system.model.services.UserService;
+
+/**
+ * Command to signup to system. It checks input and if it's incorrect notifies
+ * user, otherwise - adds new user and sets it as session attribute and
+ * redirects to profile page.
+ */
+public class SignupCommand implements Command {
+
+	@Override
+	public String execute(HttpServletRequest request,
+			HttpServletResponse response) {
+		String login = request.getParameter(Constants.LOGIN);
+		String password = request.getParameter(Constants.PASSWORD);
+		String repPassword = request.getParameter(Constants.REPEAT_PASSWORD);
+		String name = request.getParameter(Constants.NAME);
+		String surname = request.getParameter(Constants.SURNAME);
+		String goTo = Links.SIGNUP_PAGE + Constants.MESSAGE_PARAM;
+
+		if (login == null || login.isEmpty() || password == null
+				|| password.isEmpty() || repPassword == null
+				|| repPassword.isEmpty() || name == null || name.isEmpty()
+				|| surname == null || surname.isEmpty()) { // fields are empty
+			goTo += Constants.FILL_ALL;
+		} else if (!login.matches(User.LOGIN_PATTERN)
+				|| !password.matches(User.LOGIN_PATTERN)
+				|| !repPassword.equals(password)
+				|| !name.matches(User.NAME_PATTERN)
+				|| !surname.matches(User.NAME_PATTERN)) { // wrong format
+			goTo += Constants.WRONG_INPUT;
+		} else {
+			UserService userService = UserService.getInstance();
+			User user = userService.findByLogin(login, factoryType);
+
+			if (user == null) { // such user doesn't exist
+				user = new User();
+
+				user.setLogin(login);
+				user.setPassword(password);
+				user.setName(name);
+				user.setSurname(surname);
+				user.setRole(Role.ENROLLEE);
+
+				user.setId(userService.addUser(user, factoryType));
+
+				logger.debug("add user: " + user);
+
+				goTo = "";
+
+				request.getSession().setAttribute(Constants.USER, user);
+
+				try {
+					response.sendRedirect(request.getContextPath()
+							+ Links.PROFILE_PAGE); // go to profile page
+				} catch (IOException ex) {
+					logger.error(ex.getMessage(), ex);
+				}
+			} else { // login is taken
+				goTo += Constants.LOGIN_TAKEN;
+			}
+		}
+
+		return goTo; // go to signup page again
+	}
+}
