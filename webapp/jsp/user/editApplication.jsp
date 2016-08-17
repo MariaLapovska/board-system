@@ -21,11 +21,11 @@
             <div class="row">
                 <div class="row__item row__item--12">
                     <select class="input input--select" name="faculty">
-                        <option value="" selected>
+                        <option value="" ${empty userApplication ? 'selected' : ''}>
                             <fmt:message key="chooseFaculty" bundle="${bundle}" />
                         </option>
                         <c:forEach var="f" items="${facultiesList}">
-                            <option value="${f.getId()}" >
+                            <option value="${f.getId()}" ${userApplication.getFaculty().getId() eq f.getId() ? 'selected' : ''}>
                             	${f.getName()}
                            	</option>
                         </c:forEach>
@@ -34,11 +34,11 @@
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
-                    <input class="input" type="text" name="certificateNumber" 
+                    <input class="input" type="text" name="certificateNumber" value="${userApplication.getCertificateNumber()}"
                     placeholder="<fmt:message key="certificateNumber" bundle="${bundle}" />" autocomplete="off" required />
                 </div>
                 <div class="row__item row__item--6">
-                    <input class="input" type="text" name="certificateGrade" 
+                    <input class="input" type="text" name="certificateGrade" value="${userApplication.getCertificateGrade()}"
                     placeholder="<fmt:message key="certificateGrade" bundle="${bundle}" />" autocomplete="off" required />
                 </div>
             </div>

@@ -26,7 +26,7 @@ public class LogoutCommand implements Command {
 																				// home
 																				// page
 		} catch (IOException ex) {
-			logger.error(ex.getMessage(), ex);
+			LOGGER.error(ex.getMessage(), ex);
 		}
 
 		return "";

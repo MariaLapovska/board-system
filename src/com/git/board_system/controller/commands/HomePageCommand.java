@@ -44,7 +44,7 @@ public class HomePageCommand implements Command {
 																	// correct
 																	// format
 				Application application = applicationService.findByCertificate(
-						search, factoryType);
+						search, FACTORY_TYPE);
 
 				if (application != null) {
 					result.add(application);
@@ -65,16 +65,16 @@ public class HomePageCommand implements Command {
 				int facultyId = Integer.parseInt(faculty);
 
 				result = applicationService.getByFaculty(offset,
-						RECORDS_PER_PAGE, facultyId, factoryType);
+						RECORDS_PER_PAGE, facultyId, FACTORY_TYPE);
 				applicationsNumber = applicationService.getApplicationsNumber(
-						facultyId, factoryType);
+						facultyId, FACTORY_TYPE);
 				request.setAttribute(Constants.SELECTED_FACULTY,
-						facultyService.find(facultyId, factoryType));
+						facultyService.find(facultyId, FACTORY_TYPE));
 			} else { // no faculty selected
 				result = applicationService.getAll(offset, RECORDS_PER_PAGE,
-						factoryType);
+						FACTORY_TYPE);
 				applicationsNumber = applicationService
-						.getApplicationsNumber(factoryType);
+						.getApplicationsNumber(FACTORY_TYPE);
 			}
 
 			noOfPages = (int) Math.ceil(applicationsNumber * 1.0
@@ -82,11 +82,11 @@ public class HomePageCommand implements Command {
 		}
 
 		result.forEach(application -> application.setExams(applicationService
-				.getExams(application, factoryType)));
+				.getExams(application, FACTORY_TYPE)));
 
 		request.setAttribute(Constants.APPLICATIONS_LIST, result);
 		request.setAttribute(Constants.FACULTIES_LIST, FacultyService
-				.getInstance().getAll(factoryType));
+				.getInstance().getAll(FACTORY_TYPE));
 		request.setAttribute(Constants.NO_OF_PAGES, noOfPages);
 		request.setAttribute(Constants.CURRENT_PAGE, currentPage);
 

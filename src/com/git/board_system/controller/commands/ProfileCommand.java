@@ -30,7 +30,7 @@ public class ProfileCommand implements Command {
 
 		FacultyService facultyService = FacultyService.getInstance();
 
-		List<Faculty> result = facultyService.getAll(factoryType).stream()
+		List<Faculty> result = facultyService.getAll(FACTORY_TYPE).stream()
 				.filter(faculty -> faculty.isAvailable())
 				.collect(Collectors.toList()); // get all available faculties
 
@@ -42,19 +42,19 @@ public class ProfileCommand implements Command {
 					.getInstance();
 
 			Application application = applicationService.findByUser(user,
-					factoryType);
+					FACTORY_TYPE);
 
 			if (application != null) { // user has application
 				request.setAttribute(Constants.USER_APPLICATION, application);
 				request.setAttribute(Constants.APPLICATION_NO,
 						applicationService.getApplicationIndex(application,
-								factoryType) + 1); // get user
+								FACTORY_TYPE) + 1); // get user
 													// number
 													// in
 													// list
 				request.setAttribute(Constants.TOTAL_APPLICATION_NO,
 						applicationService.getApplicationsNumber(application
-								.getFaculty().getId(), factoryType)); // get
+								.getFaculty().getId(), FACTORY_TYPE)); // get
 																		// total
 																		// number
 																		// of
@@ -62,7 +62,7 @@ public class ProfileCommand implements Command {
 			}
 
 			result.forEach(faculty -> faculty.setSubjects(facultyService
-					.getSubjects(faculty.getId(), factoryType)));
+					.getSubjects(faculty.getId(), FACTORY_TYPE)));
 
 			request.setAttribute(Constants.EXAMS_LIST, result);
 

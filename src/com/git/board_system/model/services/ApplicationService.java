@@ -164,9 +164,25 @@ public class ApplicationService {
 	}
 
 	/**
+	 * Returns applications, applied for faculty with given id
+	 * 
+	 * @param facultyId
+	 *            Index of faculty to search by
+	 * @param factoryType
+	 *            Type of database to create DAO factory
+	 * @return List of gotten applications
+	 */
+	public List<Application> getByFaculty(int facultyId,
+			DaoFactoryType factoryType) {
+		ApplicationDao applicationDao = DaoFactory.getFactory(factoryType)
+				.createApplicationDao();
+
+		return applicationDao.getByFaculty(-1, -1, facultyId);
+	}
+
+	/**
 	 * Returns given quantity of applications, applied for faculty with given
-	 * id, starting from given index. If from and/or quantity values are
-	 * negative, gets all applications for given faculty.
+	 * id, starting from given index
 	 * 
 	 * @param from
 	 *            Index from which to get applications

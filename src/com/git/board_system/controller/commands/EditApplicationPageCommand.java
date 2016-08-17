@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.git.board_system.controller.Constants;
 import com.git.board_system.controller.Links;
+import com.git.board_system.model.entities.Application;
+import com.git.board_system.model.entities.User;
+import com.git.board_system.model.services.ApplicationService;
 import com.git.board_system.model.services.FacultyService;
 import com.git.board_system.model.services.SubjectService;
 
@@ -25,18 +28,26 @@ public class EditApplicationPageCommand implements Command {
 		SubjectService subjectService = SubjectService.getInstance();
 		request.setAttribute(
 				Constants.FACULTIES_LIST,
-				facultyService.getAll(factoryType).stream()
+				facultyService.getAll(FACTORY_TYPE).stream()
 						.filter(faculty -> faculty.isAvailable())
 						.collect(Collectors.toList())); // get all available
 														// faculties
 		request.setAttribute(Constants.SUBJECTS_LIST,
-				subjectService.getAll(factoryType));
+				subjectService.getAll(FACTORY_TYPE));
 
 		String goTo = Links.EDIT_APPLICATION_PAGE + Constants.ACTION_PARAM;
 
 		if (request.getRequestURI().endsWith(Constants.ADD)) {
 			goTo += Constants.ADD; // action == add application
 		} else {
+			User user = (User) request.getSession()
+					.getAttribute(Constants.USER);
+			ApplicationService applicationService = ApplicationService
+					.getInstance();
+			Application application = applicationService.findByUser(user,
+					FACTORY_TYPE);
+
+			request.setAttribute(Constants.USER_APPLICATION, application);
 			goTo += Constants.EDIT; // action == edit application
 		}
 

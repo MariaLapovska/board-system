@@ -18,7 +18,7 @@ public class AddFacultyPageCommand implements Command {
 			HttpServletResponse response) {
 		SubjectService subjectService = SubjectService.getInstance();
 		request.setAttribute(Constants.SUBJECTS_LIST,
-				subjectService.getAll(factoryType));
+				subjectService.getAll(FACTORY_TYPE));
 
 		return Links.ADD_FACULTY_PAGE;
 	}

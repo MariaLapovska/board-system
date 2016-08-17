@@ -16,5 +16,6 @@ public interface Links {
 	String ADD_FACULTY_PAGE = "/jsp/admin/addFaculty.jsp";
 	String EDIT_APPLICATION_PAGE = "/jsp/user/editApplication.jsp";
 	String ADD_FACULTY = "/board-system/faculty/add";
+	String CLOSE_FACULTY = "/jsp/admin/closeFaculty.jsp";
 	String APPLICATION = "/board-system/application/";
 }

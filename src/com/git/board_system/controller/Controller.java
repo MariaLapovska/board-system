@@ -39,7 +39,7 @@ import com.git.board_system.controller.commands.CommandList;
 
 		@Mapping(link = "/board-system/faculty/add", handle = "ADD_FACULTY_PAGE"),
 		@Mapping(link = "/controller/faculty/add", handle = "ADD_FACULTY"),
-		@Mapping(link = "/controller/faculty/close", handle = "CLOSE_FACULTY") })
+		@Mapping(link = "/board-system/faculty/close", handle = "CLOSE_FACULTY") })
 @WebServlet(name = "Controller", urlPatterns = { 
 		"/index.html",
 		"/board-system/*", 

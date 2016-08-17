@@ -34,7 +34,7 @@
     <h1 class="content__title"><fmt:message key="administrationPanel" bundle="${bundle}" /></h1>
 
     <div class="content__section">
-        <form action="${context}/controller/faculty/close" method="post">
+        <form action="${context}/board-system/faculty/close" method="post">
             <div class="row">
                 <div class="row__item">
                     <select class="input input--select" name="faculty">

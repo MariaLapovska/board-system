@@ -64,7 +64,7 @@ public class EditApplicationCommand implements Command {
 			ApplicationService applicationService = ApplicationService
 					.getInstance();
 			Application application = applicationService.findByCertificate(
-					certificateNumber, factoryType);
+					certificateNumber, FACTORY_TYPE);
 			User user = (User) request.getSession()
 					.getAttribute(Constants.USER);
 
@@ -74,19 +74,19 @@ public class EditApplicationCommand implements Command {
 				application = new Application();
 				application.setUser(user);
 				application.setFaculty(facultyService.find(
-						Integer.parseInt(facultyId), factoryType));
+						Integer.parseInt(facultyId), FACTORY_TYPE));
 				application.setCertificateNumber(certificateNumber);
 				application.setCertificateGrade(Integer
 						.parseInt(certificateGrade));
 
 				if (action.equals(Constants.ADD)) {
 					application.setId(applicationService.addApplication(
-							application, factoryType));
+							application, FACTORY_TYPE));
 				} else {
 					applicationService
-							.editApplication(application, factoryType);
+							.editApplication(application, FACTORY_TYPE);
 					application.setId(applicationService.findByCertificate(
-							certificateNumber, factoryType).getId());
+							certificateNumber, FACTORY_TYPE).getId());
 				}
 
 				SubjectService subjectService = SubjectService.getInstance();
@@ -95,21 +95,21 @@ public class EditApplicationCommand implements Command {
 
 				for (int i = 0; i < size; i++) { // add exams
 					subject = subjectService.find(
-							Integer.parseInt(subjects[i]), factoryType);
+							Integer.parseInt(subjects[i]), FACTORY_TYPE);
 					int grade = Integer.parseInt(grades[i]);
 
 					application.addExam(subject, grade);
 
 					if (action.equals(Constants.ADD)) {
 						applicationService.insertExam(application, subject,
-								grade, factoryType);
+								grade, FACTORY_TYPE);
 					} else {
 						applicationService.updateExam(application, subject,
-								grade, factoryType);
+								grade, FACTORY_TYPE);
 					}
 				}
 
-				logger.debug(action + " application: " + application);
+				LOGGER.debug(action + " application: " + application);
 
 				goTo = "";
 
@@ -118,7 +118,7 @@ public class EditApplicationCommand implements Command {
 							+ Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
 							+ Constants.CHANGES_SUCCESS); // go to profile page
 				} catch (IOException ex) {
-					logger.error(ex.getMessage(), ex);
+					LOGGER.error(ex.getMessage(), ex);
 				}
 
 			} else { // certificate already exists
@@ -133,7 +133,7 @@ public class EditApplicationCommand implements Command {
 			FacultyService facultyService) {
 
 		List<Subject> facultySubjects = facultyService.getSubjects(
-				Integer.parseInt(facultyId), factoryType);
+				Integer.parseInt(facultyId), FACTORY_TYPE);
 
 		for (String subjectString : subjects) {
 			int subjectId = Integer.parseInt(subjectString);

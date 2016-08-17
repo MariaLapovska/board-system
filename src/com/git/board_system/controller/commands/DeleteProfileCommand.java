@@ -22,8 +22,8 @@ public class DeleteProfileCommand implements Command {
 		User user = (User) request.getSession().getAttribute(Constants.USER);
 
 		if (user != null) {
-			if (UserService.getInstance().deleteUser(user, factoryType)) {
-				logger.debug("delete user: " + user);
+			if (UserService.getInstance().deleteUser(user, FACTORY_TYPE)) {
+				LOGGER.debug("delete user: " + user);
 			}
 		}
 
@@ -32,7 +32,7 @@ public class DeleteProfileCommand implements Command {
 		try {
 			response.sendRedirect(request.getContextPath() + Links.HOME);
 		} catch (IOException ex) {
-			logger.error(ex.getMessage(), ex);
+			LOGGER.error(ex.getMessage(), ex);
 		}
 
 		return "";

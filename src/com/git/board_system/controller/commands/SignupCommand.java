@@ -41,7 +41,7 @@ public class SignupCommand implements Command {
 			goTo += Constants.WRONG_INPUT;
 		} else {
 			UserService userService = UserService.getInstance();
-			User user = userService.findByLogin(login, factoryType);
+			User user = userService.findByLogin(login, FACTORY_TYPE);
 
 			if (user == null) { // such user doesn't exist
 				user = new User();
@@ -52,9 +52,9 @@ public class SignupCommand implements Command {
 				user.setSurname(surname);
 				user.setRole(Role.ENROLLEE);
 
-				user.setId(userService.addUser(user, factoryType));
+				user.setId(userService.addUser(user, FACTORY_TYPE));
 
-				logger.debug("add user: " + user);
+				LOGGER.debug("add user: " + user);
 
 				goTo = "";
 
@@ -64,7 +64,7 @@ public class SignupCommand implements Command {
 					response.sendRedirect(request.getContextPath()
 							+ Links.PROFILE_PAGE); // go to profile page
 				} catch (IOException ex) {
-					logger.error(ex.getMessage(), ex);
+					LOGGER.error(ex.getMessage(), ex);
 				}
 			} else { // login is taken
 				goTo += Constants.LOGIN_TAKEN;

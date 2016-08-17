@@ -52,9 +52,9 @@ public class EditProfileCommand implements Command {
 
 			goTo = Links.PROFILE_PAGE + Constants.MESSAGE_PARAM;
 
-			if (userService.editUser(user, factoryType)) { // changes were made
+			if (userService.editUser(user, FACTORY_TYPE)) { // changes were made
 				request.getSession().setAttribute(Constants.USER, user);
-				logger.debug("edit user: " + user);
+				LOGGER.debug("edit user: " + user);
 				goTo += Constants.CHANGES_SUCCESS;
 			} else { // changes weren't made
 				goTo += Constants.CHANGES_ERROR;
@@ -66,7 +66,7 @@ public class EditProfileCommand implements Command {
 																		// page
 				goTo = "";
 			} catch (IOException ex) {
-				logger.error(ex.getMessage(), ex);
+				LOGGER.error(ex.getMessage(), ex);
 			}
 		}
 

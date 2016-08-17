@@ -39,7 +39,7 @@ public class AddFacultyCommand implements Command {
 			goTo += Constants.WRONG_INPUT;
 		} else {
 			FacultyService facultyService = FacultyService.getInstance();
-			Faculty faculty = facultyService.findByName(name, factoryType);
+			Faculty faculty = facultyService.findByName(name, FACTORY_TYPE);
 
 			if (faculty == null) {
 				faculty = new Faculty();
@@ -50,17 +50,17 @@ public class AddFacultyCommand implements Command {
 				faculty.setPlan(Integer.parseInt(planString));
 				faculty.setAvailable(true);
 
-				faculty.setId(facultyService.addFaculty(faculty, factoryType));
+				faculty.setId(facultyService.addFaculty(faculty, FACTORY_TYPE));
 
 				for (String subjectId : subjects) { // add subjects
 					subject = subjectService.find(Integer.parseInt(subjectId),
-							factoryType);
+							FACTORY_TYPE);
 					faculty.addSubject(subject);
 
-					facultyService.insertSubject(faculty, subject, factoryType);
+					facultyService.insertSubject(faculty, subject, FACTORY_TYPE);
 				}
 
-				logger.debug("add faculty: " + faculty);
+				LOGGER.debug("add faculty: " + faculty);
 
 				goTo = "";
 
@@ -69,7 +69,7 @@ public class AddFacultyCommand implements Command {
 							+ Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
 							+ Constants.CHANGES_SUCCESS); // go to profile page
 				} catch (IOException ex) {
-					logger.error(ex.getMessage(), ex);
+					LOGGER.error(ex.getMessage(), ex);
 				}
 			} else { // name is taken
 				goTo += Constants.NAME_TAKEN;

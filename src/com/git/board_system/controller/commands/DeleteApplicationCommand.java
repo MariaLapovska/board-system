@@ -24,14 +24,14 @@ public class DeleteApplicationCommand implements Command {
 		ApplicationService applicationService = ApplicationService
 				.getInstance();
 		Application application = applicationService.findByUser(user,
-				factoryType);
+				FACTORY_TYPE);
 		String goTo = Links.PROFILE_PAGE + Constants.MESSAGE_PARAM;
 
 		if (application != null) {
-			if (applicationService.deleteApplication(application, factoryType)) { // changes
+			if (applicationService.deleteApplication(application, FACTORY_TYPE)) { // changes
 																					// were
 																					// made
-				logger.debug("delete application: " + application);
+				LOGGER.debug("delete application: " + application);
 				goTo += Constants.CHANGES_SUCCESS;
 			} else { // changes weren't made
 				goTo += Constants.CHANGES_ERROR;
@@ -43,7 +43,7 @@ public class DeleteApplicationCommand implements Command {
 																	// profile
 			goTo = "";
 		} catch (IOException ex) {
-			logger.error(ex.getMessage(), ex);
+			LOGGER.error(ex.getMessage(), ex);
 		}
 
 		return goTo;

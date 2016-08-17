@@ -29,7 +29,7 @@ public class LoginCommand implements Command {
 			goTo += Constants.FILL_ALL;
 		} else {
 			User user = UserService.getInstance().findByLogin(login,
-					factoryType);
+					FACTORY_TYPE);
 
 			if (user == null || !user.getPassword().equals(password)) { // user
 																		// doesn't
@@ -46,7 +46,7 @@ public class LoginCommand implements Command {
 					response.sendRedirect(request.getContextPath()
 							+ Links.PROFILE_PAGE);
 				} catch (IOException ex) {
-					logger.error(ex.getMessage(), ex);
+					LOGGER.error(ex.getMessage(), ex);
 				}
 			}
 		}

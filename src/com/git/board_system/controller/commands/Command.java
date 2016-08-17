@@ -13,10 +13,10 @@ import com.git.board_system.model.dao.DaoFactoryType;
 public interface Command {
 
 	/** Database type to use */
-	DaoFactoryType factoryType = DaoFactoryType.MY_SQL;
+	DaoFactoryType FACTORY_TYPE = DaoFactoryType.MY_SQL;
 
 	/** Logger to use for debugging and logging */
-	Logger logger = Logger.getLogger(Command.class);
+	Logger LOGGER = Logger.getLogger(Command.class);
 
 	/**
 	 * Processes request and response received from Controller servlet
