@@ -83,15 +83,19 @@ public class EditApplicationCommand implements Command {
 					application.setId(applicationService.addApplication(
 							application, FACTORY_TYPE));
 				} else {
-					applicationService
-							.editApplication(application, FACTORY_TYPE);
-					application.setId(applicationService.findByCertificate(
-							certificateNumber, FACTORY_TYPE).getId());
+					application.setId(applicationService.findByUser(user,
+							FACTORY_TYPE).getId());
+					applicationService.editApplication(application,
+							FACTORY_TYPE);
 				}
 
 				SubjectService subjectService = SubjectService.getInstance();
 				Subject subject;
 				int size = subjects.length;
+
+				if (action.equals(Constants.EDIT)) {
+					applicationService.deleteExams(application, FACTORY_TYPE);
+				}
 
 				for (int i = 0; i < size; i++) { // add exams
 					subject = subjectService.find(
@@ -100,33 +104,29 @@ public class EditApplicationCommand implements Command {
 
 					application.addExam(subject, grade);
 
-					if (action.equals(Constants.ADD)) {
-						applicationService.insertExam(application, subject,
-								grade, FACTORY_TYPE);
-					} else {
-						applicationService.updateExam(application, subject,
-								grade, FACTORY_TYPE);
-					}
+					applicationService.insertExam(application, subject, grade,
+							FACTORY_TYPE);
 				}
 
 				LOGGER.debug(action + " application: " + application);
 
-				goTo = "";
-
-				try {
-					response.sendRedirect(request.getContextPath()
-							+ Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
-							+ Constants.CHANGES_SUCCESS); // go to profile page
-				} catch (IOException ex) {
-					LOGGER.error(ex.getMessage(), ex);
-				}
+				goTo = Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
+						+ Constants.CHANGES_SUCCESS;
 
 			} else { // certificate already exists
-				goTo += Constants.CERTIFICATE_TAKEN; 
+				goTo += Constants.CERTIFICATE_TAKEN;
 			}
 		}
 
-		return goTo;
+		try {
+			response.sendRedirect(request.getContextPath() + goTo); // go to
+																	// profile
+																	// page
+		} catch (IOException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+
+		return "";
 	}
 
 	private boolean containsSubjects(String[] subjects, String facultyId,

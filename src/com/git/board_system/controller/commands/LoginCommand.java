@@ -26,7 +26,7 @@ public class LoginCommand implements Command {
 
 		if (login == null || login.isEmpty() || password == null
 				|| password.isEmpty()) { // fields are empty
-			goTo += Constants.FILL_ALL;
+			goTo += Constants.FILL_ALL; // go to log in page again
 		} else {
 			User user = UserService.getInstance().findByLogin(login,
 					FACTORY_TYPE);
@@ -39,18 +39,17 @@ public class LoginCommand implements Command {
 																		// incorrect
 				goTo += Constants.WRONG_INPUT;
 			} else { // go to profile page
-				goTo = "";
+				goTo = Links.PROFILE_PAGE;
 				request.getSession().setAttribute(Constants.USER, user);
-
-				try {
-					response.sendRedirect(request.getContextPath()
-							+ Links.PROFILE_PAGE);
-				} catch (IOException ex) {
-					LOGGER.error(ex.getMessage(), ex);
-				}
 			}
 		}
 
-		return goTo; // go to log in page again
+		try {
+			response.sendRedirect(request.getContextPath() + goTo);
+		} catch (IOException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+
+		return "";
 	}
 }

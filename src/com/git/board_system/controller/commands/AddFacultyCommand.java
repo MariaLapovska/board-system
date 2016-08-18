@@ -57,25 +57,26 @@ public class AddFacultyCommand implements Command {
 							FACTORY_TYPE);
 					faculty.addSubject(subject);
 
-					facultyService.insertSubject(faculty, subject, FACTORY_TYPE);
+					facultyService
+							.insertSubject(faculty, subject, FACTORY_TYPE);
 				}
 
 				LOGGER.debug("add faculty: " + faculty);
 
-				goTo = "";
+				goTo = Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
+						+ Constants.CHANGES_SUCCESS; // go to profile page
 
-				try {
-					response.sendRedirect(request.getContextPath()
-							+ Links.PROFILE_PAGE + Constants.MESSAGE_PARAM
-							+ Constants.CHANGES_SUCCESS); // go to profile page
-				} catch (IOException ex) {
-					LOGGER.error(ex.getMessage(), ex);
-				}
 			} else { // name is taken
 				goTo += Constants.NAME_TAKEN;
 			}
 		}
 
-		return goTo;
+		try {
+			response.sendRedirect(request.getContextPath() + goTo);
+		} catch (IOException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+
+		return "";
 	}
 }

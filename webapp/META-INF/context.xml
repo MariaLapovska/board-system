@@ -2,7 +2,7 @@
 <Context>
 	<!-- JDBC Datasource -->
 	<Resource name="jdbc/board_system" auth="Container" type="javax.sql.DataSource"
-		username="root" password="vfhecz" driverClassName="com.mysql.jdbc.Driver"
+		username="root" password="admin" driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/board_system?useSSL=false" maxActive="10"
 		maxIdle="4" />
 </Context>

@@ -75,12 +75,10 @@ public interface ApplicationDao extends GenericDao<Application> {
 	int insertExam(int applicationId, int subjectId, int grade);
 	
 	/**
-	 * Updates exam from application with given id
+	 * Deletes exams from application with given id
 	 * 
 	 * @param applicationId Index of application to search by
-	 * @param subjectId Index of subject to set
-	 * @param grade Grade for the exam to set
-	 * @return boolean value, indicating if update was made
+	 * @return boolean value, indicating if subjects were deleted
 	 */
-	boolean updateExam(int applicationId, int subjectId, int grade);
+	boolean deleteExams(int applicationId);
 }

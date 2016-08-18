@@ -32,13 +32,13 @@ public class SignupCommand implements Command {
 				|| password.isEmpty() || repPassword == null
 				|| repPassword.isEmpty() || name == null || name.isEmpty()
 				|| surname == null || surname.isEmpty()) { // fields are empty
-			goTo += Constants.FILL_ALL;
+			goTo += Constants.FILL_ALL; // go to signup page again
 		} else if (!login.matches(User.LOGIN_PATTERN)
 				|| !password.matches(User.LOGIN_PATTERN)
 				|| !repPassword.equals(password)
 				|| !name.matches(User.NAME_PATTERN)
 				|| !surname.matches(User.NAME_PATTERN)) { // wrong format
-			goTo += Constants.WRONG_INPUT;
+			goTo += Constants.WRONG_INPUT; // go to signup page again
 		} else {
 			UserService userService = UserService.getInstance();
 			User user = userService.findByLogin(login, FACTORY_TYPE);
@@ -56,21 +56,23 @@ public class SignupCommand implements Command {
 
 				LOGGER.debug("add user: " + user);
 
-				goTo = "";
+				goTo = Links.PROFILE_PAGE;
 
 				request.getSession().setAttribute(Constants.USER, user);
 
-				try {
-					response.sendRedirect(request.getContextPath()
-							+ Links.PROFILE_PAGE); // go to profile page
-				} catch (IOException ex) {
-					LOGGER.error(ex.getMessage(), ex);
-				}
 			} else { // login is taken
 				goTo += Constants.LOGIN_TAKEN;
 			}
 		}
 
-		return goTo; // go to signup page again
+		try {
+			response.sendRedirect(request.getContextPath() + goTo); // go to
+																	// profile
+																	// page
+		} catch (IOException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+
+		return "";
 	}
 }

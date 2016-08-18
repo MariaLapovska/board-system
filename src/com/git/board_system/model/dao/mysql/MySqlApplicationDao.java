@@ -67,8 +67,7 @@ public class MySqlApplicationDao extends MySqlAbstractDao<Application>
 	private static final String INSERT_EXAM = "INSERT INTO application_subject (application_id,"
 										+ " subject_id, grade) VALUES(?,?,?)";
 	
-	private static final String UPDATE_EXAM = "UPDATE application_subject SET subject_id=?, grade=?"
-										+ " WHERE application_id=?";
+	private static final String DELETE_EXAM = "DELETE FROM application_subject WHERE application_id=?";
 
 	private static final String COUNT_ALL = "SELECT COUNT(*) FROM application a";
 
@@ -265,16 +264,14 @@ public class MySqlApplicationDao extends MySqlAbstractDao<Application>
 	}
 
 	@Override
-	public boolean updateExam(int applicationId, int subjectId, int grade) {
+	public boolean deleteExams(int applicationId) {
 		boolean result = false;
 
 		try (Connection connection = MySqlDaoFactory.getConnection();
 				PreparedStatement preparedStatement = connection
-						.prepareStatement(UPDATE_EXAM)) {
+						.prepareStatement(DELETE_EXAM)) {
 
-			preparedStatement.setInt(1, subjectId);
-			preparedStatement.setInt(2, grade);
-			preparedStatement.setInt(3, applicationId);
+			preparedStatement.setInt(1, applicationId);
 
 			if (preparedStatement.executeUpdate() > 0) {
 				result = true;

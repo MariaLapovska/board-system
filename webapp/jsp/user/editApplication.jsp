@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="row__item row__item--6">
                     <input class="input" type="text" name="certificateNumber" value="${userApplication.getCertificateNumber()}"
-                    placeholder="<fmt:message key="certificateNumber" bundle="${bundle}" />" autocomplete="off" required />
+                    placeholder="<fmt:message key="certificateNumber" bundle="${bundle}" />"  autocomplete="off" required />
                 </div>
                 <div class="row__item row__item--6">
                     <input class="input" type="text" name="certificateGrade" value="${userApplication.getCertificateGrade()}"

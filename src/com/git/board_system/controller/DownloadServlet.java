@@ -56,15 +56,15 @@ public class DownloadServlet extends HttpServlet {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("List of Applications for " + faculty.getName() + "\n\n");
+			sb.append("List of Applications for " + faculty.getName() + "\r\n\r\n");
 			sb.append(String.format(
 					"%-3s | %-20s | %-20s | %-20s | %-20s | %-13s | %-5s", "ID",
 					"Name", "Surname", "Certificate Number",
 					"Certificate Grade", "Exam Grades", "Total")
-					+ "\n\n");
+					+ "\r\n\r\n");
 
 			for (Application a : result) {
-				sb.append(formatApplication(a) + "\n");
+				sb.append(formatApplication(a) + "\r\n");
 			}
 
 			response.setContentType("text/plain");

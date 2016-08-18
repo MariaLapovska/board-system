@@ -60,11 +60,10 @@ public class CloseFacultyCommand implements Command {
 			response.sendRedirect(request.getContextPath() + goTo); // go to
 																	// profile
 																	// page
-			goTo = "";
 		} catch (IOException ex) {
 			LOGGER.error(ex.getMessage(), ex);
 		}
 
-		return goTo;
+		return "";
 	}
 }

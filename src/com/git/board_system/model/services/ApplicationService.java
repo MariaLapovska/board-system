@@ -303,24 +303,19 @@ public class ApplicationService {
 	}
 
 	/**
-	 * Updates exam from given application
+	 * Deletes exams from given application
 	 * 
 	 * @param application
-	 *            Application to update exam from
-	 * @param subject
-	 *            Subject to set
-	 * @param grade
-	 *            Grade to set
+	 *            Application to delete exams from
 	 * @param factoryType
 	 *            Type of database to create DAO factory
-	 * @return boolean value, indicating if update was made
+	 * @return boolean value, indicating if subjects were deleted
 	 */
-	public boolean updateExam(Application application, Subject subject,
-			int grade, DaoFactoryType factoryType) {
+	public boolean deleteExams(Application application,
+			DaoFactoryType factoryType) {
 		ApplicationDao applicationDao = DaoFactory.getFactory(factoryType)
 				.createApplicationDao();
 
-		return applicationDao.updateExam(application.getId(), subject.getId(),
-				grade);
+		return applicationDao.deleteExams(application.getId());
 	}
 }

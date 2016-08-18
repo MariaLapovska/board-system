@@ -41,11 +41,10 @@ public class DeleteApplicationCommand implements Command {
 		try {
 			response.sendRedirect(request.getContextPath() + goTo); // go to
 																	// profile
-			goTo = "";
 		} catch (IOException ex) {
 			LOGGER.error(ex.getMessage(), ex);
 		}
 
-		return goTo;
+		return "";
 	}
 }
